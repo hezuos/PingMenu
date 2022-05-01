@@ -247,6 +247,7 @@
             } else {
                 titleText = [NSString stringWithFormat:@"(no response in %.0fs)",floor(since)];
             }
+            [self setupPinger]; // Maybe we need to re-resolve the destination?
         } else {
             titleText = @"(no reponse)";
         }
@@ -326,6 +327,7 @@
 
 -(NSString*) parseError:(NSString*)errName {
     if ([errName isEqualToString:@"nodename nor servname provided, or not known"]) {
+        [self setupPinger]; // Maybe we need to re-resolve the destination?
         return @"(dns failure)";
     } else if ([errName isEqualToString:@"No route to host"]) {
         return @"(no route)";
