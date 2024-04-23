@@ -14,6 +14,7 @@
 
 #define DEFAULTS_HOSTNAME @"hostName"
 
+#define COLOR_GOOD [NSColor greenColor]
 #define COLOR_SLOW [NSColor colorWithCalibratedRed:0.755 green:0.345 blue:0.000 alpha:1.000]
 #define COLOR_BAD [NSColor redColor]
 
@@ -116,10 +117,10 @@
     didStart = NO;
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     
-    self.currentTitle = @"Ping";
+    self.currentTitle = @"⫷⫸";
     
     self.theItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    [theItem.button setTitle: NSLocalizedString(@"Ping",@"")];
+    [theItem.button setTitle: NSLocalizedString(@"🌐",@"")];
     [theItem.button.cell setHighlightsBy:YES];
     [theItem setMenu:theMenu];
 
@@ -232,7 +233,7 @@
         titleColor = COLOR_BAD;
         
     } else if (!didStartHasSucceeded) {
-        titleText = @"Ping";
+        titleText = @"⚪️";
         
     } else if (lastFailedEvent && lastSuccessfulEvent && lastFailedEvent.sequenceNr > lastSuccessfulEvent.sequenceNr) {
         titleText = [self parseError:lastFailedEvent.resultError];
@@ -249,7 +250,7 @@
             }
             [self setupPinger]; // Maybe we need to re-resolve the destination?
         } else {
-            titleText = @"(no reponse)";
+            titleText = @"❌"; //(no reponse)
         }
         
         titleColor = COLOR_BAD;
@@ -261,14 +262,16 @@
          */
     } else if ((!lastSuccessfulEvent || earliestSentEvent.sequenceNr > lastSuccessfulEvent.sequenceNr) && [earliestSentEvent timeSinceSent]>10) {
         titleColor = COLOR_BAD;
-        titleText = @"(over 10s)";
+        titleText = @"🔴"; //(over 10s)
         
     } else if ([lastSentEvent timeSinceSent] > [lastSuccessfulEvent timeSinceSent]+.1 && lastSentEvent.sequenceNr>lastSuccessfulEvent.sequenceNr) {
         titleColor = COLOR_SLOW;
-        titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
+        //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
+        titleText = @"🟡"; //slow
         
     } else if (lastSuccessfulEvent) {
-        titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
+        //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
+        titleText = @"🟢";
     }
     
     
