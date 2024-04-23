@@ -92,7 +92,7 @@
     if(!_pingHost){
         _pingHost = [[NSUserDefaults standardUserDefaults] objectForKey:DEFAULTS_HOSTNAME];
         if (!_pingHost) {
-            _pingHost = @"google.com";
+            _pingHost = @"pingme.xlight.me";
         }
     }
     return _pingHost;
@@ -331,12 +331,12 @@
 -(NSString*) parseError:(NSString*)errName {
     if ([errName isEqualToString:@"nodename nor servname provided, or not known"]) {
         [self setupPinger]; // Maybe we need to re-resolve the destination?
-        return @"(dns failure)";
+        return @"(dns failure)❌";
     } else if ([errName isEqualToString:@"No route to host"]) {
-        return @"(no route)";
+        return @"(no route)❌";
     } else {
         NSLog(@"PingMenu: Error %@",errName);
-        return @"(failed)";
+        return @"(failed)❌";
     }
 }
 
