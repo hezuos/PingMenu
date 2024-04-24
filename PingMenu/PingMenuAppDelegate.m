@@ -88,6 +88,7 @@
     self.pinger = [SimplePing simplePingWithHostName:self.pingHost];
     self.lastSeen = [NSDate date];
     pinger.delegate = self;
+    didStartHasSucceeded = NO;
     [pinger start];
     
 }
@@ -305,15 +306,24 @@
         titleColor = COLOR_BAD;
         titleText = @"(no response)";
          */
+/*
     } else if ((!lastSuccessfulEvent || earliestSentEvent.sequenceNr > lastSuccessfulEvent.sequenceNr) && [earliestSentEvent timeSinceSent]>[self.redThreshold floatValue]) {
         titleColor = COLOR_BAD;
         titleText = @"🔴"; //(over 10s)
-        
+//*/
+    } else if (!lastSuccessfulEvent ||  [lastSuccessfulEvent timeSinceSent]>[self.redThreshold floatValue]) {
+        titleColor = COLOR_BAD;
+        titleText = @"🔴"; //(over 10s)
+/* compare to prev Event for check network become slow ?
     } else if ([lastSentEvent timeSinceSent] > [lastSuccessfulEvent timeSinceSent]+ [self.yellowThreshold floatValue] && lastSentEvent.sequenceNr>lastSuccessfulEvent.sequenceNr) {
         titleColor = COLOR_SLOW;
         //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
         titleText = @"🟡"; //slow
-        
+//*/
+    } else if ([lastSuccessfulEvent timeSinceSent] > [self.yellowThreshold floatValue] ) {
+        titleColor = COLOR_SLOW;
+        //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
+        titleText = @"🟡"; //slow
     } else if (lastSuccessfulEvent) {
         //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
         titleText = @"🟢";
