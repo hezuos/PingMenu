@@ -216,7 +216,9 @@
         if (!lastFailedEvent && ev.state==PingEventStateSendError)
             lastFailedEvent = ev;
         
-        if (!lastSentEvent && ev.state==PingEventStateSent)
+//        if (!lastSentEvent && ev.state==PingEventStateSent)
+//            lastSentEvent = ev;
+        if( n == 0 )
             lastSentEvent = ev;
         
         if (!lastSuccessfulEvent && ev.state==PingEventStateSent)
@@ -311,7 +313,7 @@
         titleColor = COLOR_BAD;
         titleText = @"🔴"; //(over 10s)
 //*/
-    } else if (!lastSuccessfulEvent ||  [lastSuccessfulEvent timeSinceSent]>[self.redThreshold floatValue]) {
+    } else if (!lastSuccessfulEvent ||  [lastSuccessfulEvent timeSinceSent]>[self.redThreshold floatValue] || [lastSentEvent timeSinceSent] >[self.redThreshold floatValue]) {
         titleColor = COLOR_BAD;
         titleText = @"🔴"; //(over 10s)
 /* compare to prev Event for check network become slow ?
@@ -320,7 +322,7 @@
         //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
         titleText = @"🟡"; //slow
 //*/
-    } else if ([lastSuccessfulEvent timeSinceSent] > [self.yellowThreshold floatValue] ) {
+    } else if ([lastSuccessfulEvent timeSinceSent] > [self.yellowThreshold floatValue] || [lastSentEvent timeSinceSent] >[self.redThreshold floatValue] ) {
         titleColor = COLOR_SLOW;
         //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
         titleText = @"🟡"; //slow
