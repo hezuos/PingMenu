@@ -55,6 +55,8 @@
 @property (assign) IBOutlet NSMenuItem* menuRow8;
 @property (assign) IBOutlet NSMenuItem* menuRow9;
 @property (retain,nonatomic) NSString* pingHost;
+@property (retain,nonatomic) NSString* yellowThreshold;
+@property (retain,nonatomic) NSString* redThreshold;
 @property (retain,nonatomic) NSDate* lastSeen;
 
 

@@ -13,6 +13,8 @@
 #include <netdb.h>
 
 #define DEFAULTS_HOSTNAME @"hostName"
+#define DEFAULTS_YELLOWTHRESHOLD @"yellowThreshold"
+#define DEFAULTS_REDTHRESHOLD @"redThreshold"
 
 #define COLOR_GOOD [NSColor greenColor]
 #define COLOR_SLOW [NSColor colorWithCalibratedRed:0.755 green:0.345 blue:0.000 alpha:1.000]
@@ -39,6 +41,8 @@
 @synthesize menuRow8;
 @synthesize menuRow9;
 @synthesize pingHost=_pingHost;
+@synthesize yellowThreshold=_yellowThreshold;
+@synthesize redThreshold=_redThreshold;
 
 -(IBAction)quitMe:(id)sender {
     exit(0);
@@ -103,6 +107,48 @@
     if (![pingHost isEqualToString:_pingHost]) {
         _pingHost = pingHost;
         [[NSUserDefaults standardUserDefaults] setObject:pingHost forKey:DEFAULTS_HOSTNAME];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self setupPinger];
+    }
+}
+
+
+- (NSString *) yellowThreshold {
+    if(!_yellowThreshold){
+        _yellowThreshold = [[NSUserDefaults standardUserDefaults] objectForKey:DEFAULTS_YELLOWTHRESHOLD];
+        if (!_yellowThreshold) {
+            _yellowThreshold = @"0.2";
+        }
+    }
+    return _yellowThreshold;
+    
+}
+
+-(void)setYellowThreshold:(NSString *)yellowThreshold {
+    if (![yellowThreshold isEqualToString:_yellowThreshold]) {
+        _yellowThreshold = yellowThreshold;
+        [[NSUserDefaults standardUserDefaults] setObject:yellowThreshold forKey:DEFAULTS_YELLOWTHRESHOLD];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self setupPinger];
+    }
+}
+
+
+- (NSString *) redThreshold {
+    if(!_redThreshold){
+        _redThreshold = [[NSUserDefaults standardUserDefaults] objectForKey:DEFAULTS_REDTHRESHOLD];
+        if (!_redThreshold) {
+            _redThreshold = @"5.0";
+        }
+    }
+    return _redThreshold;
+    
+}
+
+-(void)setRedThreshold:(NSString *)redThreshold {
+    if (![redThreshold isEqualToString:_redThreshold]) {
+        _redThreshold = redThreshold;
+        [[NSUserDefaults standardUserDefaults] setObject:redThreshold forKey:DEFAULTS_REDTHRESHOLD];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self setupPinger];
     }
@@ -244,9 +290,9 @@
             NSTimeInterval since = [NSDate timeIntervalSinceReferenceDate]-[self.lastSeen timeIntervalSinceReferenceDate];
             
             if (since>120) {
-                titleText = [NSString stringWithFormat:@"(no response in %.0fm)",floor(since/60)];
+                titleText = [NSString stringWithFormat:@"(no response in %.0fm)❌",(since/60)];
             } else {
-                titleText = [NSString stringWithFormat:@"(no response in %.0fs)",floor(since)];
+                titleText = [NSString stringWithFormat:@"(no response in %.3fs)❌",(since)];
             }
         } else {
             titleText = @"❌"; //(no reponse)
@@ -259,11 +305,11 @@
         titleColor = COLOR_BAD;
         titleText = @"(no response)";
          */
-    } else if ((!lastSuccessfulEvent || earliestSentEvent.sequenceNr > lastSuccessfulEvent.sequenceNr) && [earliestSentEvent timeSinceSent]>10) {
+    } else if ((!lastSuccessfulEvent || earliestSentEvent.sequenceNr > lastSuccessfulEvent.sequenceNr) && [earliestSentEvent timeSinceSent]>[self.redThreshold floatValue]) {
         titleColor = COLOR_BAD;
         titleText = @"🔴"; //(over 10s)
         
-    } else if ([lastSentEvent timeSinceSent] > [lastSuccessfulEvent timeSinceSent]+.1 && lastSentEvent.sequenceNr>lastSuccessfulEvent.sequenceNr) {
+    } else if ([lastSentEvent timeSinceSent] > [lastSuccessfulEvent timeSinceSent]+ [self.yellowThreshold floatValue] && lastSentEvent.sequenceNr>lastSuccessfulEvent.sequenceNr) {
         titleColor = COLOR_SLOW;
         //titleText = [NSString stringWithFormat:@"%1.3fs",[lastSuccessfulEvent timeSinceSent]];
         titleText = @"🟡"; //slow
@@ -344,12 +390,12 @@
 //called when simplePing is ready
 - (void)simplePing:(SimplePing *)pinger didStartWithAddress:(NSData *)address {
     if (didStart) {
-        [self sendPing];
+        //[self sendPing];
         return;
     }
     
     didStart = YES;
-    [self sendPing];
+    //[self sendPing];
 
     /*
      self.pingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(sendPing) userInfo:nil repeats:YES];

@@ -30,6 +30,8 @@
     
     PingMenuAppDelegate *AppDelegate = (PingMenuAppDelegate *)[[NSApplication sharedApplication] delegate];
     self.domain.stringValue = AppDelegate.pingHost;
+    self.yellowThreshold.stringValue = AppDelegate.yellowThreshold;
+    self.redThreshold.stringValue = AppDelegate.redThreshold;
     
     [self.window setDefaultButtonCell:self.saveButton.cell];
 }
@@ -41,6 +43,8 @@
 - (IBAction)saveButtonPressed:(id)sender {
     PingMenuAppDelegate *AppDelegate = (PingMenuAppDelegate *)[[NSApplication sharedApplication] delegate];
     AppDelegate.pingHost = self.domain.stringValue;
+    AppDelegate.yellowThreshold = self.yellowThreshold.stringValue;
+    AppDelegate.redThreshold = self.redThreshold.stringValue;
     [self close];
 }
 

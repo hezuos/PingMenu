@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03CC473A2BD7A24200E05532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03CC47392BD7A24200E05532 /* Assets.xcassets */; };
 		1148067F18809A0100FE8318 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1148067D18809A0100FE8318 /* PreferencesWindowController.m */; };
 		1148068018809A0100FE8318 /* PreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1148067E18809A0100FE8318 /* PreferencesWindowController.xib */; };
 		1231FE9A179591A500CC0D12 /* PingEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1231FE99179591A500CC0D12 /* PingEvent.m */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03CC47392BD7A24200E05532 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1148067C18809A0100FE8318 /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesWindowController.h; path = ../PreferencesWindowController.h; sourceTree = "<group>"; };
 		1148067D18809A0100FE8318 /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreferencesWindowController.m; path = ../PreferencesWindowController.m; sourceTree = "<group>"; };
 		1148067E18809A0100FE8318 /* PreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreferencesWindowController.xib; path = ../PreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		12C9F8C113E6549300739017 /* PingMenu */ = {
 			isa = PBXGroup;
 			children = (
+				03CC47392BD7A24200E05532 /* Assets.xcassets */,
 				1148067C18809A0100FE8318 /* PreferencesWindowController.h */,
 				1148067D18809A0100FE8318 /* PreferencesWindowController.m */,
 				1148067E18809A0100FE8318 /* PreferencesWindowController.xib */,
@@ -172,6 +175,7 @@
 				12C9F8C613E6549300739017 /* InfoPlist.strings in Resources */,
 				12C9F8CC13E6549300739017 /* Credits.rtf in Resources */,
 				1148068018809A0100FE8318 /* PreferencesWindowController.xib in Resources */,
+				03CC473A2BD7A24200E05532 /* Assets.xcassets in Resources */,
 				12C9F8D213E6549300739017 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,10 +273,16 @@
 		12C9F8D613E6549300739017 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PingMenu/PingMenu-Prefix.pch";
 				INFOPLIST_FILE = "PingMenu/PingMenu-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kalleboo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -282,10 +292,16 @@
 		12C9F8D713E6549300739017 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PingMenu/PingMenu-Prefix.pch";
 				INFOPLIST_FILE = "PingMenu/PingMenu-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kalleboo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
